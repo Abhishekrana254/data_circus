@@ -1,0 +1,105 @@
+<p>Title bar contents</p>
+<mat-tab-group>
+    <mat-tab label="Home"> Home </mat-tab>
+    <mat-tab label="Create Form"> Form content
+        <!-- 
+            have to make a dynamic form where people can select which type of question it is 
+                - single correct choice
+                    - options 
+                - multi correct choice 
+                    - options 
+                - text 
+
+                scc : 
+                mcc
+
+            UI -> add new question button 
+                    - type from drop down - create -> scc, mcc, depending on type show which option to show 
+                    - question_text 
+
+            saving format to ajax request -> database 
+            [ {
+                'type': 'scc',
+                'question_text': ''
+                'options': ["sad", "ads"],
+                'ans': ''
+              },
+              {
+                'type': 'mcc',
+                'question_text': '',
+                'options': ["sad", "sda"],
+                'ans': ''
+              },
+              {
+                'type': 'text',
+                'question_text': '',
+                'ans': ''
+              }
+            ]
+         -->
+
+        <br><br>
+        <!-- <button onclick="addQuestion()"></button> -->
+
+        <mat-form-field appearance="fill">
+            <mat-label>Type of Question</mat-label>
+            <mat-select [(ngModel)]="type" name="type">
+                <mat-option [value]="'scc'">
+                scc
+                </mat-option>
+                <mat-option [value]="'mcc'">
+                    mcc
+                </mat-option>
+                <mat-option [value]="'text'">
+                    text
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button (click)="addQuestion()">Add Question</button>
+        <br><br>
+        <div *ngFor="let question of questions; let i = index">
+            
+            <!-- your elements ngIf thingy with dropdown - doing 
+                 - dropdown input 
+                 - 
+            -->
+            <input [(ngModel)]="question.text" name="text">
+            <!-- <input  [(ngModel)]="question.options" name="text"> -->
+            <br>
+
+            <!-- <mat-form-field appearance="fill">
+                <mat-label>Favorite car</mat-label>
+                <mat-select [(ngModel)]="question.options" name="option">
+                    <mat-option *ngFor="let option of question.options" [value]="option">
+                    {{option}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field> -->
+
+            <div *ngIf="question.type=='scc' || question.type=='mcc'">
+                <input [(ngModel)]="opt" name="opt">
+                <button (click)="addOption(i)">Add option</button>
+                <div >
+                    
+                    <div *ngFor="let option of question.options; let j = index">
+                        {{option}}
+                        
+                        <button (click)="deleteOption(i, j)">X</button>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <br>
+
+            <!-- <input *ngIf="">
+            <input *ngIf=""> -->
+
+            <button (click)="deleteQuestion(i)">X</button>
+            <!-- <button (click)="editQuestion()"></button> -->
+        </div>
+
+        <br>
+        <button (click)="saveQuestions()">Save</button>
+    </mat-tab>
+</mat-tab-group>
